@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Денис Корниенко](https://up.htmlacademy.ru/javascript/10/user/31353).
-* Наставник: `Неизвестно`.
+* Наставник: `Без наставника`.
 
 ---
 
