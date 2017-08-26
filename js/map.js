@@ -104,6 +104,7 @@ function renderPin(objArr) {
     var positionY = element.location.y - pinHeight;
     var positionX = element.location.x - pinHalfWidth;
     pinElement.className = 'pin';
+    pinElement.setAttribute('tabindex', '0');
     pinElement.setAttribute('style', 'left: ' + positionX + 'px;' + 'top: ' + positionY + 'px;');
     pinElement.innerHTML = '<img class="rounded" width="40" height="40">';
     pinElement.children[0].setAttribute('src', element.author.avatar);
@@ -211,14 +212,27 @@ function clickPinHandler(event) {
 }
 
 // Добавление обработчика по клику на метку на карте
-
 pinContainerElement.addEventListener('click', clickPinHandler);
+// Добавление обработчика по нажатию на ENTER на метке на карте
+pinContainerElement.addEventListener('keydown', function () {
+  if (event.keyCode === 13) {
+    clickPinHandler(event);
+  }
+})
 
 // Обработчик закрытия диалогового окна
 dialogCloseButton.addEventListener('click', function () {
   dialogElement.classList.add('hidden');
   clearPins();
 });
+
+document.addEventListener('keydown', function (event) {
+  if (event.keyCode === 27) {
+    dialogElement.classList.add('hidden');
+    clearPins();
+  }
+});
+
 
 /* eslint-disable no-console */
 /* eslint-enable no-console */
