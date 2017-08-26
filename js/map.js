@@ -40,7 +40,7 @@ function getRandom(min, max) {
 function getRandomArr(arr) {
   return arr.slice(0, getRandom(0, arr.length));
 }
-
+// Функция счетчик
 function counter(a) {
   var currentCount = 1;
   if (currentCount < a) {
@@ -161,10 +161,66 @@ function renderLodge(dataObj) {
   lodgeContainer.replaceChild(lodgeElement, dialogPanel);
 }
 
-renderLodge(offersArr[0]);
+// Добавление обработчика по клику на маркер на карте
+
+// При нажатии на любой из элементов .pin ему должен добавляться класс pin--active и должен показываться элемент
+// .dialog
+// Если до этого у другого элемента существовал класс pin--active, то у этого элемента класс нужно убрать
+// При нажатии на элемент .dialog__close карточка объявления должна скрываться.
+// При этом должен деактивироваться элемент .pin, который был помечен как активный
+// При показе карточки на карточке должна отображаться актуальная информация
+// о текущем выбранном объекте (заголовок, адрес, цена, время заезда и выезда).
+// Добавить обработчики для альтернативного ввода с клавиатуры onkeydown для кнопок открытия/закрытия объявлений:
+
+var pinContainerElement = document.querySelector('.tokyo__pin-map');
+var pinElements = pinContainerElement.querySelectorAll('.pin');
+var pinArray = [].slice.call(pinElements);
+var dialogElement = document.querySelector('.dialog');
+var dialogCloseButton = dialogElement.querySelector('.dialog__close');
+
+// Функция очистки активных маркеров карты
+function clearPins() {
+  pinArray.forEach(function (t) {
+    t.classList.remove('pin--active');
+  });
+}
+
+function clickPinHandler(event) {
+  var target = event.target;
+  // получаем адрес активного изображения
+  var currentPinImageUrl = (target.getAttribute('src') || target.children[0].getAttribute('src'));
+  // получаем массив объектов размещения отфильтрованный по активной аватарке
+  var currentDialogElement = offersArr.filter(function (t) {
+    return t.author.avatar === currentPinImageUrl;
+  });
+
+  clearPins();
+
+  while (target !== pinContainerElement) {
+    if (dialogElement.classList.contains('hidden')) {
+      dialogElement.classList.remove('hidden');
+    }
+
+    if (target.classList.contains('pin')) {
+      target.classList.toggle('pin--active');
+      renderLodge(currentDialogElement[0]);
+      return;
+    }
+    target = target.parentNode;
+  }
+}
+
+// Добавление обработчика по клику на метку на карте
+
+pinContainerElement.addEventListener('click', clickPinHandler);
+
+// Обработчик закрытия диалогового окна
+dialogCloseButton.addEventListener('click', function () {
+  dialogElement.classList.add('hidden');
+  clearPins();
+});
 
 /* eslint-disable no-console */
-
 /* eslint-enable no-console */
 //
 
