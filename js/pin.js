@@ -33,39 +33,12 @@
     });
   };
 
-  window.clickPinHandler = function (event) {
-    var target = event.target;
-    // получаем адрес активного изображения
-    var currentPinImageUrl = (target.getAttribute('src') || target.children[0].getAttribute('src'));
-    // получаем массив объектов размещения отфильтрованный по активной аватарке
-    var currentDialogElement = window.offers.filter(function (t) {
-      return t.author.avatar === currentPinImageUrl;
-    });
-
-    window.clearPins();
-
-    var dialogElement = document.querySelector('.dialog');
-
-    while (target !== pinContainerElement) {
-      if (dialogElement.classList.contains('hidden')) {
-        dialogElement.classList.remove('hidden');
-      }
-
-      if (target.classList.contains('pin')) {
-        target.classList.toggle('pin--active');
-        window.renderLodge(currentDialogElement[0]);
-        return;
-      }
-      target = target.parentNode;
-    }
-  };
-
   // Добавление обработчика по клику на метку на карте
-  pinContainerElement.addEventListener('click', window.clickPinHandler);
+  pinContainerElement.addEventListener('click', window.showCard);
   // Добавление обработчика по нажатию на ENTER на метке на карте
   pinContainerElement.addEventListener('keydown', function () {
     if (event.keyCode === 13) {
-      window.clickPinHandler(event);
+      window.showCard(event);
     }
   });
 
