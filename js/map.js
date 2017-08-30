@@ -35,7 +35,7 @@ currentPin.addEventListener('mousedown', function (event) {
   };
 
   var setAddressValue = function () {
-    addressInput.value = 'x: ' + (currentPin.offsetTop + pinHeight) + ', y: ' +  (currentPin.offsetLeft + pinWidth / 2);
+    addressInput.value = 'x: ' + (currentPin.offsetTop + pinHeight) + ', y: ' + (currentPin.offsetLeft + pinWidth / 2);
   };
 
   var onMouseUp = function (upEvt) {
@@ -43,7 +43,7 @@ currentPin.addEventListener('mousedown', function (event) {
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);
     document.removeEventListener('mousemove', setAddressValue);
-  }
+  };
 
   document.addEventListener('mousemove', onMouseMove);
   document.addEventListener('mousemove', setAddressValue);
