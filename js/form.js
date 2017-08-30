@@ -2,41 +2,41 @@
 
 (function () {
   var noticeForm = document.querySelector('.notice__form');
-  var checkinInput = noticeForm.querySelector('#timein');
-  var checkoutInput = noticeForm.querySelector('#timeout');
-  var typeHousingInput = noticeForm.querySelector('#type');
-  var priceInput = noticeForm.querySelector('#price');
+  var checkInInput = noticeForm.querySelector('#timein');
+  var checkOutInput = noticeForm.querySelector('#timeout');
+  var apartmentType = noticeForm.querySelector('#type');
+  var pricePerNight = noticeForm.querySelector('#price');
   var roomNumberInput = noticeForm.querySelector('#room_number');
   var capacityInput = noticeForm.querySelector('#capacity');
+  var TIMES_IN = ['12:00', '13:00', '14:00'];
+  var TIMES_OUT = ['12:00', '13:00', '14:00'];
+  var APARTMENT_TIPES = ['bungalo', 'flat', 'house', 'palace'];
+  var PRICES = [0, 1000, 5000, 10000];
 
   // Динамическое изменение полей формы
   document.addEventListener('DOMContentLoaded', function () {
-    checkinInput.onchange = changeCheckinHandler;
-    typeHousingInput.onchange = changeTypeHousingHandler;
+    checkInInput.onchange = changeCheckinHandler;
+    apartmentType.onchange = changeTypeHousingHandler;
     roomNumberInput.oninput = changeNumberOfGuess;
   });
 
   // Динамическое изменение времени выезда
-  function changeCheckinHandler(event) {
-    var target = event.target;
-    checkoutInput.value = target.value;
+
+  var syncValues = function (element, value) {
+    element.value = value;
+  };
+
+  function changeCheckinHandler() {
+    window.synchronizeFields(checkInInput, checkOutInput, TIMES_IN, TIMES_OUT, syncValues);
   }
   // Динамическое изменение времени цены от типа жилья
-  function changeTypeHousingHandler(event) {
-    var target = event.target;
-    if (target.value === 'flat') {
-      priceInput.min = '1000';
-      priceInput.value = '1000';
-    } else if (target.value === 'bungalo') {
-      priceInput.min = '0';
-      priceInput.value = '0';
-    } else if (target.value === 'house') {
-      priceInput.min = '5000';
-      priceInput.value = '5000';
-    } else if (target.value === 'palace') {
-      priceInput.min = '10000';
-      priceInput.value = '10000';
-    }
+
+  var syncValueWithMin = function (element, value) {
+    element.value = value;
+    element.min = String(value);
+  };
+  function changeTypeHousingHandler() {
+    window.synchronizeFields(apartmentType, pricePerNight, APARTMENT_TIPES, PRICES, syncValueWithMin);
   }
   // Динамическое изменение количества гостей от количества комнат
   function changeNumberOfGuess(event) {
