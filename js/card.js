@@ -9,6 +9,7 @@
     var dialogPanel = document.querySelector('.dialog__panel');
     var lodgeElement = lodgeTemplate.cloneNode(true);
 
+
     // Перевод типа жилья
     function typeTranslate(type) {
       if (type === 'flat') {

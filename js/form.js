@@ -68,6 +68,29 @@
     }
   }
 
+  // Отправка формы на сервер
+
+  var errorHandler = function (errorMessage) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 1000; margin: 0 auto; text-align: center; background-color: red;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.bottom = '10%';
+    node.style.fontSize = '30px';
+
+    node.textContent = errorMessage;
+    document.body.appendChild(node);
+  };
+
+
+  noticeForm.addEventListener('submit', function (event) {
+    window.backend.save(new FormData(noticeForm), function () {
+      noticeForm.reset();
+    }, errorHandler);
+    event.preventDefault();
+  });
+
 })();
 
 

@@ -1,7 +1,12 @@
 'use strict';
 
 // Создание метки на карте
-window.renderPin(window.offers);
+
+
+window.backend.load(function (data) {
+  window.renderPin(data);
+});
+
 
 // Перемещение текущего пина, и вывод его адреса в поле адрес
 

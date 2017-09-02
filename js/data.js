@@ -92,4 +92,5 @@
   }
 
   madeOfferArr(window.offers, 8);
+
 })();
