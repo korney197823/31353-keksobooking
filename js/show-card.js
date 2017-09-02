@@ -8,10 +8,6 @@
     var pinContainerElement = document.querySelector('.tokyo__pin-map');
     // получаем адрес активного изображения
     var currentPinImageUrl = (target.getAttribute('src') || target.children[0].getAttribute('src'));
-    // получаем массив объектов размещения отфильтрованный по активной аватарке
-    var currentDialogElement = window.offers.filter(function (t) {
-      return t.author.avatar === currentPinImageUrl;
-    });
 
     window.clearPins();
 
@@ -24,8 +20,12 @@
 
       if (target.classList.contains('pin')) {
         target.classList.toggle('pin--active');
-        window.renderLodge(currentDialogElement[0]);
-        return;
+        window.backend.load(function (data) {
+          var currentDialogElement = data.filter(function (t) {
+            return t.author.avatar === currentPinImageUrl;
+          });
+          window.renderLodge(currentDialogElement[0]);
+        });
       }
       target = target.parentNode;
     }
